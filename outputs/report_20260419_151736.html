@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NovaMind Campaign Report — ai automation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f8fafc; color: #1e293b; }
+        .header { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; padding: 40px 48px; }
+        .header .brand { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; margin-bottom: 8px; }
+        .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+        .header .meta { font-size: 14px; opacity: 0.75; }
+        .content { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+        .section { margin-bottom: 40px; }
+        .section-title { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #64748b; margin-bottom: 16px; }
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .card h3 { font-size: 15px; font-weight: 600; color: #334155; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+        .metric { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+        .metric-label { font-size: 13px; color: #64748b; }
+        .metric-value { font-size: 18px; font-weight: 700; }
+        .chart-wrapper { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .analysis-box { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); line-height: 1.7; font-size: 15px; color: #334155; border-left: 4px solid #6366f1; }
+        .hubspot-box { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .hubspot-box ul { list-style: none; padding: 0; }
+        .hubspot-box li { font-size: 13px; font-family: "SF Mono", "Fira Code", monospace; color: #475569; padding: 8px 12px; background: #f8fafc; border-radius: 6px; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="brand">NovaMind &mdash; Campaign Report</div>
+        <h1>ai automation</h1>
+        <div class="meta">Run on April 19, 2026 at 15:17</div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="section-title">Persona Performance</div>
+            <div class="cards">
+        <div class="card">
+            <h3>Head of Agency</h3>
+            <div class="metric">
+                <span class="metric-label">Open Rate</span>
+                <span class="metric-value" style="color:#22c55e">43.7%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Click Rate</span>
+                <span class="metric-value" style="color:#ef4444">4.0%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Unsubscribe Rate</span>
+                <span class="metric-value" style="color:#22c55e">0.11%</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Creative</h3>
+            <div class="metric">
+                <span class="metric-label">Open Rate</span>
+                <span class="metric-value" style="color:#ef4444">40.3%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Click Rate</span>
+                <span class="metric-value" style="color:#ef4444">3.6%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Unsubscribe Rate</span>
+                <span class="metric-value" style="color:#22c55e">0.22%</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Project Manager</h3>
+            <div class="metric">
+                <span class="metric-label">Open Rate</span>
+                <span class="metric-value" style="color:#22c55e">43.0%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Click Rate</span>
+                <span class="metric-value" style="color:#22c55e">7.0%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Unsubscribe Rate</span>
+                <span class="metric-value" style="color:#ef4444">0.49%</span>
+            </div>
+        </div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Click Rate Comparison</div>
+            <div class="chart-wrapper">
+                <canvas id="clickChart" height="100"></canvas>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">AI Analysis</div>
+            <div class="analysis-box">**Analysis:**<br><br>The PM persona significantly outperforms both segments on click-through rate (7.0% vs. 4.0% and 3.6%), despite comparable open rates, indicating this audience resonates strongly with the approval/workflow friction angle. The CREATIVE segment shows the highest unsubscribe rate (0.22%) despite moderate engagement, suggesting the "busywork" framing may feel preachy to this audience. HEAD maintains solid baseline performance with acceptable churn, but the PM persona's 75% higher CTR reveals a clear winner for scaling.<br><br>**Recommendation:**<br><br>For next week, shift 60% of sends to the PM persona and test a subject line variation that emphasizes *time saved per week* rather than annual cost (e.g., "Save Your Team 6 Hours Every Wednesday") — the workflow-specific pain point is clearly driving their engagement, and quantifying weekly relief may push CTR even higher.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">HubSpot Distribution</div>
+            <div class="hubspot-box">
+                <ul><li>[head_of_agency] Rachel Monroe <rachel.monroe@agencymock.io> → contact_id=473595551437, note_id=365237589720</li><li>[creative] Jordan Voss <jordan.voss@agencymock.io> → contact_id=473779380936, note_id=365237859051</li><li>[pm] Marcus Chen <marcus.chen@agencymock.io> → contact_id=473787965156, note_id=365237735144</li></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Chart(document.getElementById("clickChart"), {
+            type: "bar",
+            data: {
+                labels: ['Head of Agency', 'Creative', 'Project Manager'],
+                datasets: [{
+                    label: "Click Rate (%)",
+                    data: [3.96, 3.59, 7.05],
+                    backgroundColor: ['#ef4444', '#ef4444', '#22c55e'],
+                    borderRadius: 6,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { callback: v => v + "%" },
+                        grid: { color: "#f1f5f9" }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
