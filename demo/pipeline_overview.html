@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaMind — Pipeline Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Geist", "Inter", sans-serif;
+      background: #fafaf8;
+      color: #1c1c1a;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Shared ── */
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+
+    h1, h2, h3 { font-family: "Lora", Georgia, serif; font-weight: 600; }
+
+    .label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #9c9b96;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ebebe7;
+      margin: 0;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      padding: 56px 0 0;
+      border-bottom: 1px solid #e8e7e2;
+    }
+    .site-header .wrap { padding-bottom: 48px; }
+
+    .wordmark {
+      font-family: "Lora", serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4f46e5;
+      letter-spacing: 0.5px;
+      margin-bottom: 36px;
+    }
+
+    .site-header h1 {
+      font-size: clamp(30px, 4.5vw, 48px);
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.5px;
+      color: #111110;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    .site-header h1 em {
+      font-style: italic;
+      color: #4f46e5;
+    }
+
+    .site-header p {
+      font-size: 17px;
+      color: #6b6b67;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── Intro ── */
+    .intro-section {
+      padding: 56px 0;
+      border-bottom: 1px solid #e8e7e2;
+    }
+
+    .intro-section p {
+      font-size: 16px;
+      color: #4a4a46;
+      line-height: 1.8;
+      max-width: 660px;
+    }
+
+    .intro-section p + p { margin-top: 16px; }
+
+    /* ── Stages ── */
+    .stages-section { padding: 56px 0; border-bottom: 1px solid #e8e7e2; }
+
+    .stages-section > .wrap > .label { margin-bottom: 32px; display: block; }
+
+    .stage-card {
+      background: #ffffff;
+      border: 1px solid #e8e7e2;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .stage-card:last-child { margin-bottom: 0; }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 28px;
+      border-bottom: 1px solid #f0efe9;
+    }
+
+    .stage-num {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: #9c9b96;
+      background: #f5f4f0;
+      border: 1px solid #e8e7e2;
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    .stage-title {
+      font-family: "Lora", serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: #111110;
+      flex: 1;
+    }
+
+    .stage-tool {
+      font-family: "DM Mono", monospace;
+      font-size: 11px;
+      color: #b0afa9;
+    }
+
+    .stage-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stage-col {
+      padding: 24px 28px;
+    }
+
+    .stage-col:first-child {
+      border-right: 1px solid #f0efe9;
+    }
+
+    .stage-col-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c0bfba;
+      margin-bottom: 12px;
+    }
+
+    .stage-col ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .stage-col ul li {
+      font-size: 14px;
+      color: #4a4a46;
+      padding: 5px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .stage-col ul li::before {
+      content: "–";
+      color: #c0bfba;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    .stage-col.out ul li::before {
+      content: "→";
+      color: #4f46e5;
+      font-size: 11px;
+    }
+
+    .stage-col .mono-snippet {
+      font-family: "DM Mono", monospace;
+      font-size: 12px;
+      color: #6b6b67;
+      background: #f9f8f5;
+      border: 1px solid #eeede8;
+      border-radius: 8px;
+      padding: 14px 16px;
+      line-height: 1.7;
+      margin-top: 8px;
+      white-space: pre-wrap;
+    }
+
+    /* ── Personas ── */
+    .personas-section { padding: 56px 0; border-bottom: 1px solid #e8e7e2; }
+    .personas-section > .wrap > .label { display: block; margin-bottom: 8px; }
+    .personas-section > .wrap > h2 {
+      font-size: 24px;
+      color: #111110;
+      margin-bottom: 6px;
+    }
+    .personas-section > .wrap > .section-sub {
+      font-size: 14px;
+      color: #9c9b96;
+      margin-bottom: 32px;
+    }
+
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .persona-card {
+      background: #ffffff;
+      border: 1px solid #e8e7e2;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .persona-icon { font-size: 24px; margin-bottom: 12px; }
+
+    .persona-name {
+      font-family: "Lora", serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #111110;
+      margin-bottom: 4px;
+    }
+
+    .persona-focus {
+      font-size: 11px;
+      font-weight: 500;
+      color: #4f46e5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .persona-desc {
+      font-size: 13px;
+      color: #6b6b67;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .persona-hook {
+      font-family: "DM Mono", monospace;
+      font-size: 11.5px;
+      color: #7c7c78;
+      background: #f9f8f5;
+      border: 1px solid #eeede8;
+      border-radius: 8px;
+      padding: 12px 14px;
+      line-height: 1.6;
+    }
+
+    .persona-hook-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #c0bfba;
+      margin-bottom: 6px;
+    }
+
+    /* ── Metrics ── */
+    .metrics-section { padding: 56px 0; border-bottom: 1px solid #e8e7e2; }
+    .metrics-section > .wrap > .label { display: block; margin-bottom: 8px; }
+    .metrics-section > .wrap > h2 {
+      font-size: 24px;
+      color: #111110;
+      margin-bottom: 6px;
+    }
+    .metrics-section > .wrap > .section-sub {
+      font-size: 14px;
+      color: #9c9b96;
+      margin-bottom: 32px;
+    }
+
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid #e8e7e2;
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #9c9b96;
+      margin-bottom: 10px;
+    }
+
+    .metric-value {
+      font-family: "Lora", serif;
+      font-size: 38px;
+      font-weight: 600;
+      color: #111110;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-desc {
+      font-size: 12px;
+      color: #9c9b96;
+    }
+
+    .analysis-block {
+      background: #ffffff;
+      border: 1px solid #e8e7e2;
+      border-left: 3px solid #4f46e5;
+      border-radius: 12px;
+      padding: 24px 28px;
+    }
+
+    .analysis-block .analysis-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c0bfba;
+      margin-bottom: 10px;
+    }
+
+    .analysis-block p {
+      font-size: 14px;
+      color: #4a4a46;
+      line-height: 1.75;
+    }
+
+    .analysis-block p + p { margin-top: 10px; }
+
+    /* ── Output Files ── */
+    .files-section { padding: 56px 0; }
+    .files-section > .wrap > .label { display: block; margin-bottom: 8px; }
+    .files-section > .wrap > h2 {
+      font-size: 24px;
+      color: #111110;
+      margin-bottom: 6px;
+    }
+    .files-section > .wrap > .section-sub {
+      font-size: 14px;
+      color: #9c9b96;
+      margin-bottom: 32px;
+    }
+
+    .files-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .file-card {
+      background: #ffffff;
+      border: 1px solid #e8e7e2;
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .file-name {
+      font-family: "DM Mono", monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: #4f46e5;
+      margin-bottom: 10px;
+    }
+
+    .file-title {
+      font-family: "Lora", serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #111110;
+      margin-bottom: 8px;
+    }
+
+    .file-desc {
+      font-size: 13px;
+      color: #6b6b67;
+      line-height: 1.65;
+    }
+
+    .file-contents {
+      margin-top: 16px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .file-contents li {
+      font-size: 12px;
+      color: #9c9b96;
+      padding: 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .file-contents li::before {
+      content: "·";
+      color: #c0bfba;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      border-top: 1px solid #e8e7e2;
+      padding: 32px 0;
+    }
+
+    .site-footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-footer p {
+      font-size: 12px;
+      color: #b0afa9;
+    }
+
+    .site-footer .wordmark {
+      font-family: "Lora", serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4f46e5;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 640px) {
+      .stage-body { grid-template-columns: 1fr; }
+      .stage-col:first-child { border-right: none; border-bottom: 1px solid #f0efe9; }
+      .persona-grid, .metrics-row, .files-grid { grid-template-columns: 1fr; }
+      .site-footer .wrap { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap">
+      <div class="wordmark">NovaMind</div>
+      <h1>From blog brief to CRM campaign<br><em>in five automated stages.</em></h1>
+      <p>A demonstration of how NovaMind eliminates the manual work between a content idea and a persona-targeted newsletter campaign — outline, draft, segmentation, HubSpot distribution, and reporting, all automated.</p>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <section class="intro-section">
+    <div class="wrap">
+      <p>Most agencies write a blog post, then manually adapt it for newsletters, then manually paste contacts into their CRM, then manually pull together a performance summary. That's four hours of copy-paste work for every piece of content.</p>
+      <p>This pipeline does all of it. You type in a topic, a target audience, and a content goal. Five stages run in sequence. You get a blog draft, three persona-targeted newsletters, HubSpot contacts with campaign notes attached, simulated performance metrics, an AI analysis, and a saved report — without touching anything between step one and the end.</p>
+    </div>
+  </section>
+
+  <!-- Stages -->
+  <section class="stages-section">
+    <div class="wrap">
+      <span class="label">The Pipeline</span>
+
+      <!-- Stage 1 -->
+      <div class="stage-card">
+        <div class="stage-header">
+          <span class="stage-num">01</span>
+          <span class="stage-title">Input Collection</span>
+          <span class="stage-tool">main.py · terminal prompt</span>
+        </div>
+        <div class="stage-body">
+          <div class="stage-col in">
+            <div class="stage-col-label">You put in</div>
+            <ul>
+              <li>A blog topic in plain English</li>
+              <li>A description of who will read it</li>
+              <li>What you want the content to achieve</li>
+            </ul>
+          </div>
+          <div class="stage-col out">
+            <div class="stage-col-label">You get out</div>
+            <ul>
+              <li>Three structured variables passed to every downstream stage</li>
+              <li>A printed summary confirming the inputs before generation begins</li>
+            </ul>
+            <div class="mono-snippet">Blog topic: ai automation
+Target audience: social media agency
+Content intent: subscription</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="stage-card">
+        <div class="stage-header">
+          <span class="stage-num">02</span>
+          <span class="stage-title">Content Generation</span>
+          <span class="stage-tool">Claude Haiku · outline_agent.py + writer_agent.py</span>
+        </div>
+        <div class="stage-body">
+          <div class="stage-col in">
+            <div class="stage-col-label">You put in</div>
+            <ul>
+              <li>Topic, audience, and intent from Stage 1</li>
+              <li>A system prompt that positions the writer as a NovaMind consultant, not a tech blogger</li>
+            </ul>
+          </div>
+          <div class="stage-col out">
+            <div class="stage-col-label">You get out</div>
+            <ul>
+              <li>A 5-section blog outline with headline and one-sentence summaries</li>
+              <li>A 400–600 word blog draft built from that outline — specific, numbered, no corporate language</li>
+            </ul>
+            <div class="mono-snippet">"The Hidden Cost of Manual Social Work:
+Why Agencies Are Losing $50K+ Per Year"
+
+1. The Daily Chaos of Managing Multiple Clients
+2. Why Hiring More Team Members Backfires
+3. The AI Skepticism Problem (And Why It's Valid)
+4. Where Intelligent Workflow Automation Works
+5. Start Small, Prove the ROI, Then Scale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="stage-card">
+        <div class="stage-header">
+          <span class="stage-num">03</span>
+          <span class="stage-title">Persona Segmentation</span>
+          <span class="stage-tool">Claude Haiku · newsletter_agent.py</span>
+        </div>
+        <div class="stage-body">
+          <div class="stage-col in">
+            <div class="stage-col-label">You put in</div>
+            <ul>
+              <li>The blog draft from Stage 2</li>
+              <li>Three separate system prompts — one per audience persona — each with a different angle, vocabulary, and CTA</li>
+            </ul>
+          </div>
+          <div class="stage-col out">
+            <div class="stage-col-label">You get out</div>
+            <ul>
+              <li>Three distinct 150–200 word newsletter versions, each written for a different reader inside the same agency</li>
+              <li>Same core message, completely different tone and hook for each persona</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Personas (after Stage 3) -->
+  <section class="personas-section">
+    <div class="wrap">
+      <span class="label">Stage 3 · Segmentation</span>
+      <h2>Three personas. One agency.</h2>
+      <p class="section-sub">Each represents a different decision-maker — buyer, champion, and operator.</p>
+
+      <div class="persona-grid">
+
+        <div class="persona-card">
+          <div class="persona-icon">👔</div>
+          <div class="persona-name">Head of Agency</div>
+          <div class="persona-focus">ROI · Margin · Scale</div>
+          <div class="persona-desc">Owns the P&L. Evaluates every tool through one lens: does it protect margin without adding headcount? The messaging leads with numbers — hours saved, revenue recovered, cost avoided.</div>
+          <div class="persona-hook-label">Newsletter hook</div>
+          <div class="persona-hook">Your team is leaving $50K on the table every year — and hiring another coordinator makes it worse, not better.</div>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-icon">🎨</div>
+          <div class="persona-name">Creative</div>
+          <div class="persona-focus">Focus · Energy · Craft</div>
+          <div class="persona-desc">Designer or copywriter drowning in repetitive change requests — same asset, different caption, 80 clients over. Doesn't care about business metrics. Wants their creative energy back.</div>
+          <div class="persona-hook-label">Newsletter hook</div>
+          <div class="persona-hook">You didn't become a designer to reformat the same caption 80 times. NovaMind handles the repetition so you can focus on the actual work.</div>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-icon">📋</div>
+          <div class="persona-name">Project Manager</div>
+          <div class="persona-focus">Systems · Clarity · Control</div>
+          <div class="persona-desc">Lives in Slack, email, and spreadsheets juggling approvals, deadlines, and deliverables across 50–200 clients simultaneously. Needs a system that acts like a team member, not another tool to manage.</div>
+          <div class="persona-hook-label">Newsletter hook</div>
+          <div class="persona-hook">NovaMind is the team member who never drops a ball — approval routing, report assembly, deadline tracking, all handled automatically.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Stages 4–5 -->
+  <section class="stages-section">
+    <div class="wrap">
+
+      <!-- Stage 4 -->
+      <div class="stage-card">
+        <div class="stage-header">
+          <span class="stage-num">04</span>
+          <span class="stage-title">CRM Distribution</span>
+          <span class="stage-tool">HubSpot API v3 · hubspot_agent.py</span>
+        </div>
+        <div class="stage-body">
+          <div class="stage-col in">
+            <div class="stage-col-label">You put in</div>
+            <ul>
+              <li>Blog topic and all three newsletter versions</li>
+              <li>Three mock contacts (one per persona) defined in the agent</li>
+              <li>A HubSpot access token from the environment</li>
+            </ul>
+          </div>
+          <div class="stage-col out">
+            <div class="stage-col-label">You get out</div>
+            <ul>
+              <li>Three contacts created in HubSpot, each tagged with a persona property</li>
+              <li>A campaign note attached to each contact with the newsletter content and send date</li>
+              <li>A summary of contact IDs and note IDs — existing contacts are fetched gracefully on 409 conflict</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 5 -->
+      <div class="stage-card">
+        <div class="stage-header">
+          <span class="stage-num">05</span>
+          <span class="stage-title">Reporting</span>
+          <span class="stage-tool">Claude Haiku · report_agent.py + html_report.py</span>
+        </div>
+        <div class="stage-body">
+          <div class="stage-col in">
+            <div class="stage-col-label">You put in</div>
+            <ul>
+              <li>Topic, all three newsletter versions, and the HubSpot summary</li>
+              <li>No manual data entry — everything is passed automatically from prior stages</li>
+            </ul>
+          </div>
+          <div class="stage-col out">
+            <div class="stage-col-label">You get out</div>
+            <ul>
+              <li>Simulated open rate, click rate, and unsubscribe rate per persona</li>
+              <li>An AI-written analysis comparing performance across the three audiences with one specific recommendation for next week</li>
+              <li>A JSON run log and a standalone HTML report saved to outputs/</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Metrics (after Stage 5) -->
+  <section class="metrics-section">
+    <div class="wrap">
+      <span class="label">Stage 5 · Reporting</span>
+      <h2>Simulated campaign performance.</h2>
+      <p class="section-sub">Randomly generated within realistic industry ranges. Used by Claude to produce a specific, data-grounded recommendation.</p>
+
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-label">Open Rate</div>
+          <div class="metric-value">33.5%</div>
+          <div class="metric-desc">Average across all three personas. Industry benchmark: 21–35%.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Click-Through Rate</div>
+          <div class="metric-value">6.97%</div>
+          <div class="metric-desc">PM persona led at 7.1%, Head at 4.0%, Creative at 3.6%.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Unsubscribe Rate</div>
+          <div class="metric-value">0.19%</div>
+          <div class="metric-desc">Well within acceptable range. Creative was highest at 0.22%.</div>
+        </div>
+      </div>
+
+      <div class="analysis-block">
+        <div class="analysis-label">AI Analysis · Claude Haiku</div>
+        <p>The PM persona significantly outperforms both segments on click-through rate (7.1% vs. 4.0% and 3.6%), despite comparable open rates. This audience resonates strongly with the approval and workflow friction angle — the chaos of managing 50+ clients through Slack and spreadsheets is a vivid, specific pain point that lands.</p>
+        <p><strong>Recommendation for next week:</strong> Shift 60% of sends to the PM persona and test a subject line that emphasises time saved per week rather than annual cost — e.g. "Save Your Team 6 Hours Every Wednesday." The workflow-specific pain point is driving engagement, and quantifying weekly relief may push CTR higher still.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Output Files -->
+  <section class="files-section">
+    <div class="wrap">
+      <span class="label">Output</span>
+      <h2>What gets saved after every run.</h2>
+      <p class="section-sub">Two files written to outputs/ automatically. No manual export step.</p>
+
+      <div class="files-grid">
+
+        <div class="file-card">
+          <div class="file-name">outputs/run_{timestamp}.json</div>
+          <div class="file-title">Full Run Log</div>
+          <div class="file-desc">Every input and output from the pipeline serialised to JSON. Machine-readable, easy to load into a dashboard or pass to a downstream process.</div>
+          <ul class="file-contents">
+            <li>Run timestamp, topic, audience, intent</li>
+            <li>Full blog outline and draft</li>
+            <li>All three newsletter versions</li>
+            <li>HubSpot contact and note IDs</li>
+            <li>Per-persona metrics and AI analysis text</li>
+          </ul>
+        </div>
+
+        <div class="file-card">
+          <div class="file-name">outputs/report_{timestamp}.html</div>
+          <div class="file-title">Visual HTML Report</div>
+          <div class="file-desc">A standalone, self-contained HTML file you can open directly in a browser. No server required. Shares cleanly as an attachment.</div>
+          <ul class="file-contents">
+            <li>NovaMind-branded header with topic and run date</li>
+            <li>Three persona metric cards, colour-coded against average</li>
+            <li>Chart.js bar chart comparing click rates across personas</li>
+            <li>Full AI analysis section</li>
+            <li>HubSpot distribution summary with contact and note IDs</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="wordmark">NovaMind</div>
+      <p>Built with Anthropic Claude Haiku · HubSpot API · Python · 2026</p>
+    </div>
+  </footer>
+
+</body>
+</html>
