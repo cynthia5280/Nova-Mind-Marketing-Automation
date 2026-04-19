@@ -6,11 +6,16 @@ NovaMind is a fictional AI-powered workflow automation tool built for social med
 
 The pipeline takes a single blog topic and fully automates the journey from content brief to CRM-logged campaign: generating a structured outline, writing a full blog draft, segmenting it into three persona-targeted newsletters, distributing contact records and campaign notes to HubSpot, and producing a performance report with AI-generated analysis.
 
+**Demo:** Open `demo/pipeline_overview.html` in your browser for a visual walkthrough of all five stages.
+
 ---
 
 ## Architecture
 
 The pipeline runs across five sequential stages, each feeding its output into the next:
+
+**Stage 1 — Input** (`stage_1_input/`)
+`main.py` collects three inputs via CLI: blog topic, target audience, and content intent. These are passed to all downstream stages.
 
 **Stage 2 — Generation** (`stage_2_generation/`)
 `outline_agent.py` takes the topic, audience, and intent and generates a 5-section blog outline. `writer_agent.py` takes that outline and writes a 400–600 word blog draft. Both use Claude Haiku via the Anthropic SDK.
@@ -48,7 +53,7 @@ Together these three cover the buyer (Head), the end user most likely to champio
 | Component | Tool / Model |
 |---|---|
 | Content generation (outline, draft, newsletters, report) | Anthropic Claude Haiku (`claude-haiku-4-5-20251001`) via `anthropic` Python SDK |
-| Legacy / fallback generation | Google Gemini (`gemini-2.5-flash-lite`) via `google-genai` SDK |
+| Legacy / fallback generation | Note: Google Gemini was used during development while Anthropic API access was being set up. The production pipeline uses Claude Haiku exclusively. |
 | CRM distribution | HubSpot CRM API v3 via `requests` |
 | Environment management | `python-dotenv` |
 | HTML report chart | Chart.js (CDN) |
@@ -100,3 +105,4 @@ After each run, two files are saved to `outputs/`:
 
 - **`outputs/run_{timestamp}.json`** — Full pipeline data including inputs, outline, draft, all three newsletters, HubSpot summary, and performance report with AI analysis.
 - **`outputs/report_{timestamp}.html`** — Visual HTML report with a NovaMind-branded header, per-persona metric cards (color-coded against average), a click rate bar chart, AI analysis, and HubSpot contact log. Open directly in any browser.
+- **`demo/pipeline_overview.html`** — A plain-language visual walkthrough of the pipeline, open in any browser.
